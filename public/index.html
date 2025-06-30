@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Catálogo MARÉ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/lucide@latest/font/lucide.min.css">
+    <style>
+      body {
+        background-color: #f9f4f1;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+      const { useState, useEffect } = React;
+
+      const ShoppingCart = () => <span className="text-2xl">🛒</span>;
+      const X = () => <span className="text-xl">✕</span>;
+
+      const mockData = [
+        {
+          codigo: "LB233",
+          nombre: "Cartera Sofía",
+          descripcion: "Cartera de eco cuero con correa larga regulable.",
+          precio: 750,
+          imagen: "imagenes/LB233 1.jpg"
+        },
+        {
+          codigo: "AN001",
+          nombre: "Anillo Coral",
+          descripcion: "Anillo ajustable con baño de oro y piedra natural.",
+          precio: 280,
+          imagen: "imagenes/AN001 1.jpg"
+        },
+        {
+          codigo: "AR502",
+          nombre: "Aros Lumière",
+          descripcion: "Aros colgantes en acero quirúrgico.",
+          precio: 190,
+          imagen: "imagenes/AR502 1.jpg"
+        }
+      ];
+
+      const Producto = ({ producto }) => (
+        <div className="bg-white rounded-2xl shadow-md p-4 flex flex-col items-center text-center space-y-2">
+          <img src={producto.imagen} alt={producto.nombre} className="w-32 h-32 object-cover rounded-xl" />
+          <h3 className="text-lg font-semibold">{producto.nombre}</h3>
+          <p className="text-sm text-gray-600">{producto.descripcion}</p>
+          <p className="text-brown-600 font-bold">${producto.precio}</p>
+          <button className="bg-brown-700 text-white px-4 py-1 rounded-xl text-sm hover:bg-brown-800">
+            Agregar <ShoppingCart />
+          </button>
+        </div>
+      );
+
+      const App = () => {
+        const [productos, setProductos] = useState([]);
+
+        useEffect(() => {
+          // Carga inicial
+          setProductos(mockData);
+        }, []);
+
+        return (
+          <div className="min-h-screen p-6 bg-[#f9f4f1]">
+            <h1 className="text-3xl font-bold text-brown-800 mb-6 text-center">Catálogo Mayorista MARÉ</h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {productos.map((prod) => (
+                <Producto key={prod.codigo} producto={prod} />
+              ))}
+            </div>
+          </div>
+        );
+      };
+
+      ReactDOM.render(<App />, document.getElementById("root"));
+
+    </script>
+  </body>
+</html>
