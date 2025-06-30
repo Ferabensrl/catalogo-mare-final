@@ -9,11 +9,6 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/lucide@latest/font/lucide.min.css">
-    <style>
-      body {
-        background-color: #f9f4f1;
-      }
-    </style>
   </head>
   <body>
     <div id="root"></div>
@@ -21,37 +16,18 @@
     <script type="text/babel">
 
       const { useState, useEffect } = React;
-
       const ShoppingCart = () => <span className="text-2xl">🛒</span>;
-      const X = () => <span className="text-xl">✕</span>;
 
-      const mockData = [
-        {
-          codigo: "LB233",
-          nombre: "Cartera Sofía",
-          descripcion: "Cartera de eco cuero con correa larga regulable.",
-          precio: 750,
-          imagen: "imagenes/LB233 1.jpg"
-        },
-        {
-          codigo: "AN001",
-          nombre: "Anillo Coral",
-          descripcion: "Anillo ajustable con baño de oro y piedra natural.",
-          precio: 280,
-          imagen: "imagenes/AN001 1.jpg"
-        },
-        {
-          codigo: "AR502",
-          nombre: "Aros Lumière",
-          descripcion: "Aros colgantes en acero quirúrgico.",
-          precio: 190,
-          imagen: "imagenes/AR502 1.jpg"
-        }
-      ];
+      // Cargar productos desde el archivo JSON
+      const fetchProducts = async () => {
+        const response = await fetch('/data/productos.json');
+        const data = await response.json();
+        return data;
+      };
 
       const Producto = ({ producto }) => (
         <div className="bg-white rounded-2xl shadow-md p-4 flex flex-col items-center text-center space-y-2">
-          <img src={producto.imagen} alt={producto.nombre} className="w-32 h-32 object-cover rounded-xl" />
+          <img src={`/imagenes/${producto.imagenes[0]}`} alt={producto.nombre} className="w-32 h-32 object-cover rounded-xl" />
           <h3 className="text-lg font-semibold">{producto.nombre}</h3>
           <p className="text-sm text-gray-600">{producto.descripcion}</p>
           <p className="text-brown-600 font-bold">${producto.precio}</p>
@@ -63,10 +39,15 @@
 
       const App = () => {
         const [productos, setProductos] = useState([]);
-
+        
         useEffect(() => {
-          // Carga inicial
-          setProductos(mockData);
+          // Cargar productos desde el archivo JSON generado
+          const loadProducts = async () => {
+            const productsData = await fetchProducts();
+            setProductos(productsData);
+          };
+          
+          loadProducts();
         }, []);
 
         return (
