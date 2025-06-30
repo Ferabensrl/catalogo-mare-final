@@ -14,7 +14,6 @@
     <div id="root"></div>
 
     <script type="text/babel">
-
       const { useState, useEffect } = React;
       const ShoppingCart = () => <span className="text-2xl">🛒</span>;
 
@@ -27,7 +26,7 @@
 
       const Producto = ({ producto }) => (
         <div className="bg-white rounded-2xl shadow-md p-4 flex flex-col items-center text-center space-y-2">
-          <img src={`/imagenes/${producto.imagenes[0]}`} alt={producto.nombre} className="w-32 h-32 object-cover rounded-xl" />
+          <img src={producto.imagenes[0]} alt={producto.nombre} className="w-32 h-32 object-cover rounded-xl" />
           <h3 className="text-lg font-semibold">{producto.nombre}</h3>
           <p className="text-sm text-gray-600">{producto.descripcion}</p>
           <p className="text-brown-600 font-bold">${producto.precio}</p>
@@ -41,7 +40,6 @@
         const [productos, setProductos] = useState([]);
         
         useEffect(() => {
-          // Cargar productos desde el archivo JSON generado
           const loadProducts = async () => {
             const productsData = await fetchProducts();
             setProductos(productsData);
@@ -63,7 +61,6 @@
       };
 
       ReactDOM.render(<App />, document.getElementById("root"));
-
     </script>
   </body>
 </html>
