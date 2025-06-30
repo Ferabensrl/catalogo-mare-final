@@ -623,7 +623,7 @@ const ImageGalleryModal = ({ product, isOpen, onClose, initialImageIndex = 0 }: 
               }`}
             >
               <img
-                src={`/imagenes/${imagen}`}
+                src={`https://catalogo-mare-final.vercel.app/imagenes/${imagen}`}
                 alt={`Thumbnail ${index + 1}`}
                 className="w-full h-full object-cover"
                 onError={(e) => {
